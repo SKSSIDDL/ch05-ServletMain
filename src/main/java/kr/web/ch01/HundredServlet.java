@@ -10,23 +10,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 //주소 지정
-@WebServlet("/helloServlet")
-public class HelloServlet extends HttpServlet{
+@WebServlet("/hundred")
+public class HundredServlet extends HttpServlet{
 	public void doGet(HttpServletRequest request,
-					  HttpServletResponse response)throws ServletException, IOException{
+			  HttpServletResponse response)throws ServletException, IOException{
+		int total = 0;
+		for(int i=1; i<=100; i++) {
+			total += i;
+		}
+		
 		//문서 타입 및 캐릭터셋 지정
 		response.setContentType("text/html;charset=utf-8");
 		
 		//HTML 출력을 위한 출력 스트림 생성
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
-		out.println("<head><title>Hello Servlet</title></head>");
+		out.println("<head><title>1부터 100까지 더하는 서블릿</title></head>");
 		out.println("<body>");
-		out.println("처음 작성하는 Servlet입니다.");
+		out.println("1부터 100까지의 합은 " + total);
 		out.println("</body>");
 		out.println("</html>");
-		out.close(); //출력스트림 자원정리
-				
+		out.close();
 	}
-	
 }
