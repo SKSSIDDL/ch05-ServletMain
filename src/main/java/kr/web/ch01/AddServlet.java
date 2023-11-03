@@ -9,28 +9,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/gugudan")
-public class GugudanServlet extends HttpServlet{
+@WebServlet("/add")
+public class AddServlet extends HttpServlet{
+	@Override
 	public void doGet(HttpServletRequest request,
-			  HttpServletResponse response)throws ServletException, IOException{
+					  HttpServletResponse response)throws ServletException, IOException{
+		//전송된 데이트 반환
+		//getParameter가 String으로 반환하기 때문에 int로 변환
+		int num1 = Integer.parseInt(request.getParameter("num1"));
+		int num2 = Integer.parseInt(request.getParameter("num2"));
+		
 		//문서 타입 및 캐릭터셋 지정
 		response.setContentType("text/html;charset=utf-8");
 		
-		//전송된 데이터를 반환
-		int dan = Integer.parseInt(request.getParameter("dan")); //반환 타입 String->Integer.parseInt 사용
-		
-		//HTML 출력을 위한 출력 스트림을 생성
+		//HTML 출력을 위한 출력 스트림 생성
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
-		out.println("<head><title>구구단</title></head>");
+		out.println("<head><title>덧셈하기</title></head>");
 		out.println("<body>");
-		out.println(dan +"단<br>");
-		out.println("-----------<br>");
-		
-		for(int i=1; i<=9; i++) {
-			out.println(dan + "*" + i + "=" + dan*i + "<br>");
-		}
-		
+		out.printf("%d + %d = %d",num1,num2,num1+num2);
 		out.println("</body>");
 		out.println("</html>");
 		out.close();
