@@ -28,8 +28,12 @@ public class TodayMenu extends HttpServlet{
 		
 		//배열로 처리(식별자 이름이 같기 때문)
 		String[] values = request.getParameterValues("lunch");
-		for(int i=0; i<values.length; i++) {
-			out.println(values[i]+"<br>");
+		if(values !=null) { //전송한 데이터가 있는 경우
+			for(int i=0; i<values.length; i++) {
+				out.println(values[i]+"<br>");
+			}
+		}else { //전송한 데이터가 없는 경우
+			out.println("선택하지 않음");
 		}
 		
 		out.println("</body>");
