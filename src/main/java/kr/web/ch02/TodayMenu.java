@@ -1,4 +1,4 @@
-package kr.web.ch01;
+package kr.web.ch02;
 
 import java.io.IOException;
 import java.io.PrintWriter;
