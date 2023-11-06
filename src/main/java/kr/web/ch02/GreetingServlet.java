@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GreetingServlet extends HttpServlet{
 	@Override
 	public void doPost(HttpServletRequest request,
-					  HttpServletResponse response) throws ServletException,IOException{
+					   HttpServletResponse response) throws ServletException,IOException{
 		//문서 타입 및 캐릭터셋 지정
 		response.setContentType("text/html;charset=utf-8");
 		
