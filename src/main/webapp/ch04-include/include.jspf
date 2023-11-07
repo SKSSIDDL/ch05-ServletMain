@@ -1,0 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+String img_path = "../images";
+String file_path = "../files";
+%>
+
+<!-- include action태그를 사용하면 html태그를 공유할 수 있음  -->

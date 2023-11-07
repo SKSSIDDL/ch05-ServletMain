@@ -20,9 +20,7 @@ address 파라미터 = <%= request.getParameter("address") %><br>
 	if(values!=null){
 		for(int i=0; i<values.length; i++){
 %>
-
 			<%= values[i] %> <!-- 루프 영역內 -->
-
 <%			
 		}
 	}
