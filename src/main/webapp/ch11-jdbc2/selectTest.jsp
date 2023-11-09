@@ -6,67 +6,65 @@
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>    
 <%@ page import="java.sql.Date" %>
-<%@ include file="dbInfo.jspf" %>
+<%@ include file="dbInfo.jspf" %>   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 목록</title>
+<title>제품목록 보기</title>
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
 	<div class="page-main">
-		<h2>게시판 목록</h2>
+		<h2>제품 목록</h2>
 		<div class="align-right">
-			<input type="button" value="글쓰기" onclick="location.href='insertTestForm.jsp'">		
+			<input type="button" value="제품 등록" onclick="location.href='insertTestForm.jsp'">
 		</div>
 <%
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
+		
 		try{
-			//JDBC 수행 1단계 : 드라이버 로드
 			Class.forName(driverName);
 			
-			//JDBC 수행 2단계 : Connection 객체 생성
 			conn = DriverManager.getConnection(jdbcUrl,dbId,dbPass);
 			
-			//SQL문 작성
-			sql = "SELECT * FROM tboard ORDER BY num DESC";
+			sql = "SELECT * FROM product ORDER BY num DESC";
 			
-			//JDBC 수행 3단계 : PrepareStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			
-			//JDBC 수행 4단계 : SQL문을 테이블에 반영하고 결과 행들을 ResultSet에 담음
 			rs = pstmt.executeQuery();
 %>
 			<table>
 				<tr>
-					<th>글번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
+					<th>제품번호</th>
+					<th>제품명</th>
+					<th>가격</th>
+					<th>재고</th>
+					<th>원산지</th>
 				</tr>
-<%
-			while(rs.next()){ //행 안으로 진입 후 데이터 뽑아냄
-				int num = rs.getInt("num"); //컬럼명을 넣어 데이터를 뽑아냄
+<%			
+			while(rs.next()){
+				int num = rs.getInt("num");
 				String name = rs.getString("name");
-				String title = rs.getString("title");
-				Date reg_date = rs.getDate("reg_date");
+				int price = rs.getInt("price");
+				int stock = rs.getInt("stock");
+				String origin = rs.getString("origin");
 %>
 				<tr>
 					<td><%= num %></td>
-					<td><a href="detailTest.jsp?num=<%= num %>"><%= title %></a></td>
-					<td><%= name %></td>
-					<td><%= reg_date %></td>
+					<td><a href="detailTest.jsp?num=<%= num %>"><%= name %></a></td>
+					<td class="align-right"><%= String.format("% ,d원", price) %></td>
+					<td class="align-right"><%= String.format("% ,d", stock) %></td>
+					<td><%= origin %></td>
 				</tr>
 <%				
 			}
-%>				
+%>
 			</table>
-<%			
-			
+<%
 		}catch(Exception e){
 %>
 			<div class="result-display">
