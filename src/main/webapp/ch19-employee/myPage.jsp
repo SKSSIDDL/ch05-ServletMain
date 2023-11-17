@@ -25,9 +25,9 @@
 		<ul>
 			<li>아이디 : <%= vo.getId() %></li>
 			<li>이름 : <%= vo.getName() %></li>
-			<li>이메일 : <%= vo.getSalary() %></li>
-			<li>전화번호 : <%= vo.getJob() %></li>
-			<li>가입일 : <%= vo.getReg_date() %></li>
+			<li>급여 : <%= vo.getSalary() %></li>
+			<li>직업 : <%= vo.getJob() %></li>
+			<li>작성일 : <%= vo.getReg_date() %></li>
 		</ul>
 		<hr size="1" width="100%" noshade="noshade">
 		<div class="align-right">

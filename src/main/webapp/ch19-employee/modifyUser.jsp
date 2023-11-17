@@ -12,8 +12,8 @@
 	<jsp:useBean id="employee" class="kr.employee.vo.EmployeeVO"/>
 	<jsp:setProperty name="employee" property="*"/>
 <%
-	employee.setSnum(user_num);
 	EmployeeDAO dao = EmployeeDAO.getInstance();
+	employee.setSnum(user_num);
 	dao.updateEmployee(employee);
 %>	
 <!DOCTYPE html>

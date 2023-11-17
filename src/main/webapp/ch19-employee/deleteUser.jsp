@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="kr.employee.dao.EmployeeDAO"%>
-<%@ page import="kr.employee.vo.EmployeeVO"%>    
+<%@ page import="kr.employee.vo.EmployeeVO"%>
+<%@ page import="kr.story.dao.StoryDAO"%>
+<%@ page import="kr.story.vo.StoryVO"%>    
 <%
 	String user_id = (String)session.getAttribute("user_id");
 	if(user_id == null){

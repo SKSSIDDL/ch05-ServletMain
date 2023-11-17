@@ -24,7 +24,7 @@ public class StoryDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
-		
+
 		try {
 			conn = DBUtil.getConnection();
 			sql = "INSERT INTO story (num,title,content,ip,snum) VALUES (story_seq.nextval,?,?,?,?)";
@@ -76,20 +76,20 @@ public class StoryDAO {
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql="SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM story ORDER BY num ASC)a) WHERE rnum>=? AND rnum<=?";
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM(SELECT * FROM story JOIN semployee USING(snum) ORDER BY num desc)a) WHERE rnum >= ? AND rnum <= ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
-			pstmt.setInt(1, endRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			list = new ArrayList<StoryVO>();
 			while(rs.next()) {
-				StoryVO storyVO = new StoryVO();
-				storyVO.setNum(rs.getInt("num"));
-				storyVO.setTitle(rs.getString("title"));
-				storyVO.setIp(rs.getString("ip"));
-				storyVO.setReg_date(rs.getDate("reg_date"));
+				StoryVO vo = new StoryVO();
+				vo.setNum(rs.getInt("num"));
+				vo.setTitle(rs.getString("title"));
+				vo.setReg_date(rs.getDate("reg_date"));
+				vo.setId(rs.getString("id"));
 				
-				list.add(storyVO);
+				list.add(vo);
 			}
 		}catch(Exception e) {
 			throw new Exception(e);
@@ -109,7 +109,7 @@ public class StoryDAO {
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql = "SELECT * FROM story WHERE num=?";
+			sql = "SELECT * FROM story JOIN semployee USING(snum) WHERE num=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
@@ -117,6 +117,8 @@ public class StoryDAO {
 				vo = new StoryVO();
 				vo.setNum(rs.getInt("num"));
 				vo.setTitle(rs.getString("title"));
+				vo.setContent(rs.getString("content"));
+				vo.setId(rs.getString("id"));
 				vo.setIp(rs.getString("ip"));
 				vo.setSnum(rs.getInt("snum"));
 				vo.setReg_date(rs.getDate("reg_date"));
@@ -137,12 +139,11 @@ public class StoryDAO {
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql = "UPDATE story SET title=?, content=?, ip=? WHERE num=?";
+			sql = "UPDATE story SET title=?, content=? WHERE num=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getContent());
-			pstmt.setString(3, vo.getIp());
-			pstmt.setInt(4, vo.getNum());
+			pstmt.setInt(3, vo.getNum());
 			pstmt.executeUpdate();
 		}catch(Exception e) {
 			throw new Exception(e);

@@ -146,13 +146,17 @@ public class EmployeeDAO {
 	public void deleteEmployee(int snum)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		String sql = null;
 		
 		try {
 			//커넥션풀로부터 커넥션을 할당
 			 conn = DBUtil.getConnection();
+			 conn.setAutoCommit(false);
+			 
+			 //자식글을 먼저 다 지우고 탈퇴, 없으면 그냥 탈퇴
 			 //sql문 작성
-			 sql = "DELETE FROM semployee WHERE snum=?";
+			 sql = "DELETE FROM story WHERE snum=?";
 			 //PreparedStatement객체 생성
 			 pstmt = conn.prepareStatement(sql);
 			 //?에 데이터 바인딩
@@ -160,9 +164,17 @@ public class EmployeeDAO {
 			 //sql문 실행
 			 pstmt.executeUpdate();
 			 
+			 sql = "DELETE FROM semployee WHERE snum=?";
+			 pstmt2 = conn.prepareStatement(sql);
+			 pstmt2.setInt(1, snum);
+			 pstmt2.executeUpdate();
+			 
+			 conn.commit();
 		}catch(Exception e) {
+			conn.rollback();
 			throw new Exception(e);
 		}finally {
+			DBUtil.executeClose(null, pstmt2, null);
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
