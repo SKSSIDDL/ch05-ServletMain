@@ -24,6 +24,18 @@
   	<session-timeout>50</session-timeout>
   </session-config>
   <!-- 세션 유지 시간 지정 (분 단위로 지정) 끝 -->
+  
+  <!-- DispatcherServlet 설정 시작 -->
+  <servlet>
+  	<servlet-name>DispatcherServlet</servlet-name>
+  	<servlet-class>kr.web.mvc.DispatcherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>DispatcherServlet</servlet-name>
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <!-- DispatcherServlet 설정 끝 -->
+  
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
